@@ -1,0 +1,10 @@
+spring:
+  data:
+    mongodb:
+      database: FCS_SE
+      host: localhost
+      port: 27017
+
+
+server:
+  port: 9092
