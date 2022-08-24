@@ -15,9 +15,9 @@ The company employs supervisory staff. Each supervisory staff overlooks customer
 
 System should be able to display all vehicles which are maintained by a particular supervisor.
 The system should be able to generate the below reports.
-• Display all pick booking including vehicle information along driver details
-• Generate a list of top 5 subsidiaries which have hired out the most numbers of vehicles
+* Display all pick booking including vehicle information along driver details
+* Generate a list of top 5 subsidiaries which have hired out the most numbers of vehicles
 for last 30days.
-• Allow the system to enter a customer ID and produce a report that details all hires of
-that customer in a suitable format.
-• Display all customers who have not place any orders for last 100 days.
+* Allow the system to enter a customer ID and produce a report that details all hires of
+that customer in a suitable format. 
+* Display all customers who have not placed any orders for last 100 days.
