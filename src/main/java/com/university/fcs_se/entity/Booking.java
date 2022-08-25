@@ -23,13 +23,13 @@ public class Booking {
     private String location;
     private String destination;
     private LocalDate date;
-    private int noOfVehicles;
     private VehicleType vehicleType;
     private LocalDate dateToDeliver;
     private LocalDate returnDate;
     private Boolean isHireActive;
     private String supervisorId;
     private String customerId;
-
+    private String vehicleId;
+    private String driverId;
 
 }
