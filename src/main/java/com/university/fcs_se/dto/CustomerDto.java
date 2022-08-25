@@ -14,5 +14,7 @@ public class CustomerDto {
     private String firstName;
     private String lastName;
     private String location;
+    private int numberOfVehiclesBooked;
     private CustomerType type;
+
 }

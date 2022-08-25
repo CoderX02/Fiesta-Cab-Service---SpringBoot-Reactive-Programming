@@ -15,7 +15,9 @@ public class Customer {
     private String firstName;
     private String lastName;
     private String location;
+    private int numberOfVehiclesBooked;
     private CustomerType type;
+
 }
 
 
