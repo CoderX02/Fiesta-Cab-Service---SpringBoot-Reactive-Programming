@@ -30,7 +30,7 @@ public class VehicleController {
     }
 
     @PostMapping("/Save")
-    public Mono<VehicleDto> saveVehicle(Mono<VehicleDto> vehicleDtoMono){
+    public Mono<VehicleDto> saveVehicle(@RequestBody Mono<VehicleDto> vehicleDtoMono){
         return vehicleService.saveVehicle(vehicleDtoMono);
     }
 
