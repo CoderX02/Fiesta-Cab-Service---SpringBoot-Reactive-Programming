@@ -8,5 +8,4 @@ import reactor.core.publisher.Mono;
 
 @Repository
 public interface SupervisorRepository extends ReactiveMongoRepository<Supervisor,String>{
-    Mono<Supervisor> findSupervisorBySupervisorId(String id);
 }
