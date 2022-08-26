@@ -21,6 +21,7 @@ public class Booking {
     private String bookingID;
     private BookingType bookingType;
     private String location;
+    private Subsidiary subsidiary;
     private String destination;
     private LocalDate date;
     private VehicleType vehicleType;
