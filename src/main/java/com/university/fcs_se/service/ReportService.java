@@ -1,6 +1,5 @@
 package com.university.fcs_se.service;
 
-import com.university.fcs_se.dto.BookingDto;
 import com.university.fcs_se.entity.Booking;
 import com.university.fcs_se.entity.BookingType;
 import com.university.fcs_se.repo.BookingRepository;
