@@ -1,6 +1,7 @@
 package com.university.fcs_se.service;
 
 import com.university.fcs_se.dto.CustomerDto;
+import com.university.fcs_se.entity.Customer;
 import com.university.fcs_se.repo.CustomerRepository;
 import com.university.fcs_se.utils.CustomerAppUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -26,6 +30,12 @@ public class CustomerService {
 
     public Mono<CustomerDto> getCustomer(String id) {
         return repository.findById(id).map(CustomerAppUtils::entityToDTo);
+    }
+
+    public Mono<List<Customer>> getCustomerByMobileNumber(String mobileNumber) {
+        return repository.findAll()
+                .filter(customer -> customer.getMobileNumber()
+                        .equals(mobileNumber)).collect(Collectors.toList());
     }
 
     public Mono<CustomerDto> saveCustomer(Mono<CustomerDto> customerDtoMono){
