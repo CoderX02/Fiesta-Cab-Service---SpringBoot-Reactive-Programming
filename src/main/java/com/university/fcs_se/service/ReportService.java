@@ -28,57 +28,46 @@ public class ReportService {
     }
 
     public Flux<Booking> getAllPickUpBookings(){
-        Flux<Booking> bookings = bookingRepository.findAll();
 
-        Mono<List<Booking>> booking_pickups = bookings
+        Flux<Booking> bookingPickupsFlux = bookingRepository.findAll()
                 .filter(booking -> booking.getBookingType().equals(BookingType.PICKUP))
-                .collect(Collectors.toList());
-
-        Flux<Booking> bookingPickupsFlux = booking_pickups.flatMapMany(Flux::fromIterable);
+                .collect(Collectors.toList())
+                .flatMapMany(Flux::fromIterable);
 
         return bookingPickupsFlux;
 
     }
     public Flux<Booking> getAllPickUpAndDropBookings(){
-        Flux<Booking> bookings = bookingRepository.findAll();
-
-        Mono<List<Booking>> booking_pickups = bookings
+        Flux<Booking> bookingPickUpAndDrop  = bookingRepository.findAll()
                 .filter(booking -> booking.getBookingType().equals(BookingType.PICKANDDROP))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList())
+                .flatMapMany(Flux::fromIterable);
 
-        Flux<Booking> bookingPickUpAndDropFlux = booking_pickups.flatMapMany(Flux::fromIterable);
 
-        return bookingPickUpAndDropFlux;
+        return bookingPickUpAndDrop;
     }
 
 
     public Mono<Map<String, List<Booking>>> getBookingPickupList_GroupedBySupervisorId() {
 
-        Flux<Booking> bookings = bookingRepository.findAll();
-
-        Mono<List<Booking>> booking_pickups = bookings
+        Mono<Map<String, List<Booking>>> bookingsGroupBySupervisorId  = bookingRepository.findAll()
                 .filter(booking -> booking.getBookingType().equals(BookingType.PICKUP))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList())
+                .flatMapMany(Flux::fromIterable)
+                .collect(Collectors.groupingBy(Booking::getSupervisorId));
 
-        Flux<Booking> bookingPickupsFlux = booking_pickups.flatMapMany(Flux::fromIterable);
-
-        Mono<Map<String, List<Booking>>> groupByVehicleId = bookingPickupsFlux.collect(Collectors.groupingBy(Booking::getVehicleId));
-
-        Mono<Map<String, List<Booking>>> groupBySupervisorId = bookingPickupsFlux.collect(Collectors.groupingBy(Booking::getSupervisorId));
-        return groupBySupervisorId;
+//        Mono<Map<String, List<Booking>>> groupBySupervisorId = booking_pickups.collect(Collectors.groupingBy(Booking::getSupervisorId));
+        return bookingsGroupBySupervisorId;
     }
 
     public Mono<Map<String, List<Booking>>> getBookingPickupList_GroupedByVehicleId() {
 
-        Flux<Booking> bookings = bookingRepository.findAll();
-
-        Mono<List<Booking>> booking_pickups = bookings
+        Mono<Map<String, List<Booking>>> groupByVehicleId = bookingRepository.findAll()
                 .filter(booking -> booking.getBookingType().equals(BookingType.PICKUP))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList())
+                .flatMapMany(Flux::fromIterable)
+                .collect(Collectors.groupingBy(Booking::getVehicleId));
 
-        Flux<Booking> bookingPickupsFlux = booking_pickups.flatMapMany(Flux::fromIterable);
-
-        Mono<Map<String, List<Booking>>> groupByVehicleId = bookingPickupsFlux.collect(Collectors.groupingBy(Booking::getVehicleId));
         return groupByVehicleId;
     }
 
