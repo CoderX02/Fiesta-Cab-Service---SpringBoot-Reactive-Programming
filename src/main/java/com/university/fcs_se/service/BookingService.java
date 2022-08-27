@@ -27,7 +27,6 @@ public class BookingService{
     }
 
     public Mono<BookingDto> saveBooking(Mono<BookingDto> bookingDtoMono) {
-//        bookingSupervisorMapper.supervisorLinking(bookingDtoMono);
         return bookingDtoMono.map(BookingAppUtils::dtoToEntity)
                 .flatMap(bookingRepository::insert)
                 .map(BookingAppUtils::entityToDto);
