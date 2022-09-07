@@ -16,7 +16,6 @@ import java.util.Collection;
 @NoArgsConstructor
 @Document("booking")
 public class Booking {
-
     @Id
     private String bookingID;
     private BookingType bookingType;
@@ -32,5 +31,4 @@ public class Booking {
     private String customerId;
     private String vehicleId;
     private String driverId;
-
 }
