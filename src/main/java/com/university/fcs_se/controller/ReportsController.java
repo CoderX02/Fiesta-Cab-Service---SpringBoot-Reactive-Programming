@@ -1,6 +1,7 @@
 package com.university.fcs_se.controller;
 
 import com.university.fcs_se.entity.Booking;
+import com.university.fcs_se.entity.Subsidiary;
 import com.university.fcs_se.service.ReportService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,6 +46,13 @@ public class ReportsController {
         return reportService.getBookingPickupList_GroupedByVehicleId();
     }
 
+    @GetMapping("/Top5Subsidiary")
+    public Mono<Map<Subsidiary, Long>> getTop5Subsidiaries() {
+        return reportService.getTop5Subsidiaries();
+    }
 
-
+    @GetMapping("/allCustomersThatHasNotPlacedAnOrder")
+    public Mono<Map<String, List<Booking>>> allCustomersThatHasNotPlacedAnOrder() {
+        return reportService.allCustomersThatHasNotPlacedAnOrder();
+    }
 }

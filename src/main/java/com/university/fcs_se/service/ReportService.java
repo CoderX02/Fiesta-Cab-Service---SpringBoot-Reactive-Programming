@@ -2,6 +2,7 @@ package com.university.fcs_se.service;
 
 import com.university.fcs_se.entity.Booking;
 import com.university.fcs_se.entity.BookingType;
+import com.university.fcs_se.entity.Subsidiary;
 import com.university.fcs_se.repo.BookingRepository;
 import com.university.fcs_se.repo.DriverRepository;
 import com.university.fcs_se.repo.VehicleRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,28 +36,22 @@ public class ReportService {
                 .flatMapMany(Flux::fromIterable);
 
         return bookingPickupsFlux;
-
     }
     public Flux<Booking> getAllPickUpAndDropBookings(){
         Flux<Booking> bookingPickUpAndDrop  = bookingRepository.findAll()
                 .filter(booking -> booking.getBookingType().equals(BookingType.PICKANDDROP))
                 .collect(Collectors.toList())
                 .flatMapMany(Flux::fromIterable);
-
-
         return bookingPickUpAndDrop;
     }
-
 
     public Mono<Map<String, List<Booking>>> getBookingPickupList_GroupedBySupervisorId() {
 
         Mono<Map<String, List<Booking>>> bookingsGroupBySupervisorId  = bookingRepository.findAll()
-                .filter(booking -> booking.getBookingType().equals(BookingType.PICKUP))
                 .collect(Collectors.toList())
                 .flatMapMany(Flux::fromIterable)
                 .collect(Collectors.groupingBy(Booking::getSupervisorId));
 
-//        Mono<Map<String, List<Booking>>> groupBySupervisorId = booking_pickups.collect(Collectors.groupingBy(Booking::getSupervisorId));
         return bookingsGroupBySupervisorId;
     }
 
@@ -69,6 +65,23 @@ public class ReportService {
 
         return groupByVehicleId;
     }
+    public Mono<Map<Subsidiary, Long>> getTop5Subsidiaries(){
 
+        Mono<Map<Subsidiary, Long>> collect = bookingRepository.findAll()
+                .filter(booking -> booking.getDate().isAfter(LocalDate.now().minusDays(30)))
+                .collect(Collectors.groupingBy(Booking::getSubsidiary, Collectors.counting()));
+
+        return collect;
+    }
+
+
+
+    public Mono<Map<String, List<Booking>>> allCustomersThatHasNotPlacedAnOrder() {
+         return bookingRepository.findAll()
+                .filter(booking -> booking.getDate().isAfter(LocalDate.now().minusDays(100)))
+                .collect(Collectors.groupingBy(Booking::getCustomerId));
+    }
 
 }
+
+
