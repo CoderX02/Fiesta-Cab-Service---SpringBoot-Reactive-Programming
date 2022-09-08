@@ -1,7 +1,6 @@
 package com.university.fcs_se.service;
 
 import com.university.fcs_se.dto.BookingDto;
-import com.university.fcs_se.mapper.BookingSupervisorMapper;
 import com.university.fcs_se.repo.BookingRepository;
 import com.university.fcs_se.utils.BookingAppUtils;
 import org.springframework.stereotype.Service;
@@ -10,8 +9,6 @@ import reactor.core.publisher.Mono;
 
 @Service
 public class BookingService{
-
-    private BookingSupervisorMapper bookingSupervisorMapper;
     private final BookingRepository bookingRepository;
 
     public BookingService(BookingRepository bookingRepository) {
@@ -27,6 +24,8 @@ public class BookingService{
     }
 
     public Mono<BookingDto> saveBooking(Mono<BookingDto> bookingDtoMono) {
+//        ADD DRIVER MAPPER
+//        ADD SUPERVISOR MAPPER
         return bookingDtoMono.map(BookingAppUtils::dtoToEntity)
                 .flatMap(bookingRepository::insert)
                 .map(BookingAppUtils::entityToDto);
